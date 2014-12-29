@@ -1,12 +1,8 @@
 <?php
 include(dirname(__FILE__).'/Ios_Push_Notification.php');
 
-$db = new Ios_Push_Notification('localhost', 'root', 'root', 'db');
-
-$insertData = array(
-	'title' => 'Inserted title',
-	'body' => 'Inserted body'
-);
-
-$results = $db->insert('posts', $insertData);
+$deviceTokens = array();
+$message  = 'This is a test!';
+$push = new Ios_Push_Notification($deviceTokens, $message);
+$results = $push->pushNotification();
 print_r($results);

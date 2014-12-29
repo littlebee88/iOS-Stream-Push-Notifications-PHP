@@ -77,15 +77,15 @@ class Ios_Push_Notification
     protected $badgeCallback;
 
     /**
-     * @param $devices
+     * @param $deviceTokens
      * @param $message
      * @param $badge
      * @param $sound
      * @param null $badgeCallback
      */
-    function __construct($devices, $message, $badge=null, $sound=null, $addtlPayload=null, $badgeCallback=null)
+    function __construct($deviceTokens, $message, $badge=null, $sound=null, $addtlPayload=null, $badgeCallback=null)
     {
-        $this->deviceTokens = $devices;
+        $this->deviceTokens = $deviceTokens;
         $this->message = $message;
         $this->badge = $badge;
         $this->sound = $sound;
