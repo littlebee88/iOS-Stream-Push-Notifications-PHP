@@ -1,57 +1,95 @@
 <?php
+/**
+ * Ios_Push_Notification Class
+ *
+ * @category  Request Driver
+ * @package   Ios_Push_Notification
+ * @author    Stephanie Schmidt <littlebeehigbee@gmail.com>
+ * @copyright Copyright (c) 2014
+ * @license   http://opensource.org/licenses/gpl-3.0.html GNU Public License
+ * @version   1.0
+ **/
 
-
-include(dirname(__FILE__).'/RequestDriverStream.php');
+include(dirname(__FILE__).'/Request_Driver_Stream.php');
 
 /**
  * Class IosPushNotification
  */
-class IosPushNotification
+class Ios_Push_Notification
 {
 	/**
+     * An array of device tokens to send the push notifications to.
+     *
      * @var array
      */
     public $deviceTokens;
+
 	/**
-     * @var
+     * Push Message as a string
+     *
+     * @var string
      */
     public $message;
+
 	/**
-     * @var null
+     * Badge you would like displayed on the push notification
+     *
+     * @var string
      */
     public $badge;
+
+    /**
+     * Sound you would like to use with the push notification
+     *
+    * @var string
+    */
+    public $sound;
+
 	/**
+     * The push notification response
+     *
      * @var
      */
     public $response;
 
     /**
+     * The payload that will be constructed from the $message, $badge, and $sound
+     *
      * @var array
      */
     protected $payload;
 
     /**
-     * @var array
+     * Any additional payload you would like to include in the push notification for your mobile app
+     *
+     * @var string
      */
-    protected $addtl_payload;
+    protected $addtlPayload;
+
+    /**
+     * The $badgeCallback parameter allows you call for a $badge count on each individual device token in the queue of $devices.
+     *
+     * The badge call back consists of an array of two arguments, the class to call and the class method to call,
+     * and the device token is used as the argument for the method call.
+     *
+     * @var string
+     */
+    protected $badgeCallback;
 
     /**
      * @param $devices
      * @param $message
-     * @param $certificate
-     * @param $passPhrase
      * @param $badge
      * @param $sound
      * @param null $badgeCallback
-     * @param bool $testing
-     * @internal param Apps_Notification $notification
      */
-    function __construct($devices, $message, $badge=null, $sound=null, $badgeCallback=null)
+    function __construct($devices, $message, $badge=null, $sound=null, $addtlPayload=null, $badgeCallback=null)
     {
         $this->deviceTokens = $devices;
         $this->message = $message;
         $this->badge = $badge;
         $this->sound = $sound;
+        $this->addtlPayload = $addtlPayload;
         $this->badgeCallback = $badgeCallback;
     }
 
@@ -82,14 +120,14 @@ class IosPushNotification
                 'badge' => $this->badge,
                 'sound' => $this->sound,
             );
-            if (!is_null($this->addtl_payload)) {
-                $payload['app'] = $this->addtl_payload;
+            if (!is_null($this->addtlPayload)) {
+                $payload['app'] = $this->addtlPayload;
             }
 
             $payload = json_encode($payload);
 
             //load correct request driver and send request properties
-            $driver = new RequestDriverStream($deviceToken, $payload);
+            $driver = new Request_Driver_Stream($deviceToken, $payload);
             $response = $driver->execute();
 
             if ($response) {

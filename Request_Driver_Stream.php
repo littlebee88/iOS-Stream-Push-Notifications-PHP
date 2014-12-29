@@ -1,10 +1,19 @@
 <?php
-
+/**
+ * Request_Driver_Stream Class
+ *
+ * @category  Request Driver
+ * @package   Request_Driver_Stream
+ * @author    Stephanie Schmidt <littlebeehigbee@gmail.com>
+ * @copyright Copyright (c) 2014
+ * @license   http://opensource.org/licenses/gpl-3.0.html GNU Public License
+ * @version   1.0
+ **/
 
 /**
  * Class Request_Driver_Stream
  */
-class RequestDriverStream
+class Request_Driver_Stream
 {
     //connection settings for sending stream
     /**
